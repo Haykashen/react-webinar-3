@@ -10,6 +10,19 @@ import './styles.css';
 function App({ store }) {
   const list = store.getState().list;
 
+  function countWord(count)
+  {
+    let arrStrNumb = ['2','3','4']
+    let arrNumb = [12,13,14]
+    let str = (count+'')
+        str = str[str.length-1]
+    console.log(str)    
+    if(arrStrNumb.indexOf( str ) != -1 && arrNumb.indexOf( count ) == -1) 
+      return 'раза'
+    else 
+      return 'раз'  
+  }
+
   return (
     <div className="App">
       <div className="App-head">
@@ -34,7 +47,7 @@ function App({ store }) {
               >
                 <div className="Item-code">{item.code}</div>
                 <div className="Item-title">{item.title}</div>
-                <div className="Item-count_selected">{item.selectClickCount !== 0 ? `Выделяли раз: ${item.selectClickCount}` : ''}</div>
+                <div className="Item-count_selected">{item.selectClickCount !== 0 ? `Выделяли ${item.selectClickCount} `+countWord(item.selectClickCount) : ''}</div>
                 <div className="Item-actions">
                   <button onClick={() => store.deleteItem(item.code)}>Удалить</button>
                 </div>
