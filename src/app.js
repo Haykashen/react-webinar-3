@@ -15,10 +15,16 @@ function App({ store }) {
     let arrStrNumb = ['2','3','4']
     let arrNumb = [12,13,14]
     let str = (count+'')
-        str = str[str.length-1]
-    console.log(str)    
-    if(arrStrNumb.indexOf( str ) != -1 && arrNumb.indexOf( count ) == -1) 
-      return 'раза'
+    let laststr = str[str.length-1]
+    console.log(str)  
+      
+    if(arrStrNumb.indexOf(laststr) != -1)
+    {
+      if(str.length>1 && str[str.length-2]=='1')// предпоследняя цифра 1
+        return 'раз' 
+      else 
+        return 'раза'   
+    }  
     else 
       return 'раз'  
   }
