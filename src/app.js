@@ -40,7 +40,7 @@ function App({ store }) {
     //   store.addItem();
     // }, [store]),
   };
-// && showBasket
+// 
   return (
     <PageLayout>
       <Head title="Магазин" />
@@ -56,7 +56,11 @@ function App({ store }) {
         // onDeleteItem={callbacks.onDeleteItem}
         // onSelectItem={callbacks.onSelectItem}
       />
-      <Basket basket={basket} setBasket={setBasket}/>
+      {showBasket && <Basket 
+        basket={basket} 
+        setBasket={setBasket} 
+        showBasket={showBasket} 
+        setShowBasket={setShowBasket}/>} 
     </PageLayout>
   );
 }

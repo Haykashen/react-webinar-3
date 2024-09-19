@@ -8,7 +8,7 @@ function Controls({ count, sum, showBasket, setShowBasket }) {
   return (
     <div className="Controls">
       <div>{'В корзине: '}{res}</div>
-      <div className="Open-actions">
+      <div className="Actions">
         <button onClick={() => setShowBasket(!showBasket)}>Перейти</button>
       </div>
     </div>

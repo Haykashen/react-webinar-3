@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 //import Item from '../item';
 import './style.css';
 
-function Basket({ basket, setBasket }) {
+function Basket({ basket, setBasket, showBasket, setShowBasket }) {
   let itemArray = [];
   const deleteItem = (event)=> {
     console.log(event.target.id)
@@ -45,6 +45,11 @@ function Basket({ basket, setBasket }) {
     <div className="Head">
         <h1>Корзина</h1>
     </div>
+    <div className="Controls">
+      <div className="Actions">
+        <button onClick={() => setShowBasket(!showBasket)}>Закрыть</button>
+      </div>
+    </div>    
     <div className="List">
       {itemArray}
     </div>
