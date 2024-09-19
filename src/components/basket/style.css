@@ -1,0 +1,18 @@
+.Item-count{
+    width: 10%;
+    padding: 20px 10px;
+    text-align: end;
+} 
+
+.Total{
+
+    padding-top: 20px;
+    text-align: end;
+    padding-right: 10%;
+    b{
+        padding-left: 20px;
+    }
+}
+
+
+

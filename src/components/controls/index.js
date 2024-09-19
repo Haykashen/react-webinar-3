@@ -1,21 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './style.css';
+import { plural } from '../../utils';
 
-function Controls({ onAdd }) {
+function Controls({ count, sum, showBasket, setShowBasket }) {
+  let res = (count === 0) ? <b>{'пусто'}</b> : <b>{count+' '+plural(count, {one: 'товар',few: 'товара',many: 'товаров',})+' / '+sum.toLocaleString("ru-RU")} ₽</b>;
   return (
     <div className="Controls">
-      <button onClick={() => onAdd()}>Добавить</button>
+      <div>{'В корзине: '}{res}</div>
+      <div className="Open-actions">
+        <button onClick={() => setShowBasket(!showBasket)}>Перейти</button>
+      </div>
     </div>
   );
 }
 
 Controls.propTypes = {
-  onAdd: PropTypes.func,
+  setBasket: PropTypes.func,
 };
 
 Controls.defaultProps = {
-  onAdd: () => {},
+  setBasket: () => {},
 };
 
 export default React.memo(Controls);
