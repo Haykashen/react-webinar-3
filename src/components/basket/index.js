@@ -29,10 +29,10 @@ function Basket({ basket, setBasket }) {
   for(let key in basket.Items)
   {
     itemArray.push(    
-      <div className="List-item Item">
+      <div  key={basket.Items[key].code}className="List-item Item">
         <div className="Item-code">{basket.Items[key].code}</div>
         <div className="Item-title">{basket.Items[key].title}</div>
-        <div className="Item-price" >{basket.Items[key].price.toLocaleString("ru-RU")} ₽</div>
+        <div className="Item-price" >{basket.Items[key].price.toLocaleString("ru-RU", { style: "currency", currency: "RUB" })}</div>
         <div className="Item-count" >{basket.Items[key].count} шт</div>
         <div className="Item-actions">
           <button id={basket.Items[key].code} onClick={deleteItem}>Удалить</button>
@@ -50,7 +50,7 @@ function Basket({ basket, setBasket }) {
     </div>
     <div className="Total">
       <b>Итого </b>
-      <b>{basket.ItemSum.toLocaleString("ru-RU")} ₽</b>
+      <b>{basket.ItemSum.toLocaleString("ru-RU", { style: "currency", currency: "RUB" })}</b>
     </div>    
     
    </>  

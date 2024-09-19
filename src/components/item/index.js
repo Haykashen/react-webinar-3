@@ -46,7 +46,7 @@ function Item(props) {
     <div className={'Item'}>
       <div className="Item-code">{props.item.code}</div>
       <div className="Item-title">{props.item.title}</div>
-      <div className="Item-price" >{props.item.price.toLocaleString("ru-RU")} ₽</div>
+      <div className="Item-price" >{props.item.price.toLocaleString("ru-RU", { style: "currency", currency: "RUB" })}</div>
       <div className="Item-actions">
         <button onClick={callbacks.setBasket}>Добавить</button>
       </div>
