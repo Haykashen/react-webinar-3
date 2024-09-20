@@ -1,0 +1,8 @@
+.BasketTotal{
+    padding-top: 20px;
+    text-align: end;
+    padding-right: 10%;
+    b{
+        padding-left: 20px;
+    }
+}

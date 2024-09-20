@@ -43,11 +43,44 @@ class Store {
   /**
    * Добавление новой записи
    */
-  addItem() {
-    this.setState({
-      ...this.state,
-      list: [...this.state.list, { code: generateCode(), title: 'Новая запись' }],
-    });
+  addItem(code) {
+    const item = this.state.list.find(i => i.code === code);
+    const basketItem = this.state.basketList.find(i => i.code === code);
+
+    if (basketItem) {
+      this.setState({
+        ...this.state,
+        basketList: this.state.basketList.map(i =>i.code === code ? { ...i, count: i.count + 1 } : i),
+        basketListSum: this.state.basketListSum + item.price, //this.state.basketList.reduce((sum, item) => sum + (item.count*item.price), 0)
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        basketList: [...this.state.basketList, { ...item, count: 1 }],
+        basketListSum: this.state.basketListSum + item.price,//this.state.basketList.reduce((sum, item) => sum + (item.count*item.price), 0)
+      });
+    }  
+    
+    
+    // this.setState({
+    //   ...this.state,
+    //   list: [...this.state.list, { code: generateCode(), title: 'Новая запись' }],
+    // });
+    // this.setState({
+    //   ...this.state,
+    //   // Новый список, в котором не будет удаляемой записи
+    //   basketList: this.state.basketList.filter((item, index, arr) => {
+    //     if(item.code === arg.code )
+    //     {
+    //       item.count += 1;
+    //     }
+        
+    //     return (item.count > 0);
+
+    //   }),
+    //   basketListLength: this.state.basketList.length,
+    //   basketListSum: this.state.basketList.reduce((sum, item) => sum + (item.count*item.price), 0)
+    // });    
   }
 
   /**
@@ -58,31 +91,18 @@ class Store {
     this.setState({
       ...this.state,
       // Новый список, в котором не будет удаляемой записи
-      list: this.state.list.filter(item => item.code !== code),
+      basketList: this.state.basketList.filter((item, index, arr) => {
+        if(item.code === code )
+        {
+          item.count -= 1;
+          return (item.count > 0);
+        }
+      }),
+      basketListLength: this.state.basketList.length,
+      basketListSum: this.state.basketList.reduce((sum, item) => sum + (item.count*item.price), 0)
     });
   }
 
-  /**
-   * Выделение записи по коду
-   * @param code
-   */
-  // selectItem(code) {
-  //   this.setState({
-  //     ...this.state,
-  //     list: this.state.list.map(item => {
-  //       if (item.code === code) {
-  //         // Смена выделения и подсчёт
-  //         return {
-  //           ...item,
-  //           selected: !item.selected,
-  //           count: item.selected ? item.count : item.count + 1 || 1,
-  //         };
-  //       }
-  //       // Сброс выделения если выделена
-  //       return item.selected ? { ...item, selected: false } : item;
-  //     }),
-  //   });
-  // }
 }
 
 export default Store;
