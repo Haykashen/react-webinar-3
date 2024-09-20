@@ -4,7 +4,7 @@ import './style.css';
 
 function BasketHead({ title, showBasket, setShowBasket }) {
   return (
-    <div className="Head">
+    <div className="BasketHead">
       <h1>{title}</h1>
       <div className="Actions">
         <button onClick={() => setShowBasket(!showBasket)}>Закрыть</button>

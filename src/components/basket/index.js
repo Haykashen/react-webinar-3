@@ -5,9 +5,11 @@ import './style.css';
 function Basket({ children}) {
 
   return (
-    <>
-     {children}
-   </>  
+    <div className="BasketModal-overlay"> {/* Затемненный фон */}
+      <div className="BasketModal" onClick={(e) => e.stopPropagation()}> {/* Окно, которое не закрывается при клике внутри */}
+        {children}
+      </div>
+    </div>
   );
 }
 

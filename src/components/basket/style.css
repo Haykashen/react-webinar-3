@@ -1,8 +1,23 @@
-.Item-count{
-    width: 10%;
-    padding: 20px 10px;
-    text-align: end;
-} 
-
+.BasketModal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+  }
+  
+  /* Стили для модального окна */
+  .BasketModal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    z-index: 1000;
+    width: 960px;
+    border-radius: 8px;
+  }
 
 
