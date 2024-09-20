@@ -60,27 +60,7 @@ class Store {
         basketListSum: this.state.basketListSum + item.price,//this.state.basketList.reduce((sum, item) => sum + (item.count*item.price), 0)
       });
     }  
-    
-    
-    // this.setState({
-    //   ...this.state,
-    //   list: [...this.state.list, { code: generateCode(), title: 'Новая запись' }],
-    // });
-    // this.setState({
-    //   ...this.state,
-    //   // Новый список, в котором не будет удаляемой записи
-    //   basketList: this.state.basketList.filter((item, index, arr) => {
-    //     if(item.code === arg.code )
-    //     {
-    //       item.count += 1;
-    //     }
-        
-    //     return (item.count > 0);
-
-    //   }),
-    //   basketListLength: this.state.basketList.length,
-    //   basketListSum: this.state.basketList.reduce((sum, item) => sum + (item.count*item.price), 0)
-    // });    
+      
   }
 
   /**
