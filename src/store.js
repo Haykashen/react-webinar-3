@@ -41,7 +41,7 @@ class Store {
   }
 
   /**
-   * Добавление новой записи
+   * Добавление в корзину
    */
   addItem(code) {
     const item = this.state.list.find(i => i.code === code);
@@ -64,23 +64,18 @@ class Store {
   }
 
   /**
-   * Удаление записи по коду
+   * Удаление из корзины
    * @param code
    */
   deleteItem(code) {
+    const item = this.state.basketList.find(i => i.code === code);
+    //console.log(item.count)
     this.setState({
       ...this.state,
-      // Новый список, в котором не будет удаляемой записи
-      basketList: this.state.basketList.filter((item, index, arr) => {
-        if(item.code === code )
-        {
-          item.count -= 1;
-          return (item.count > 0);
-        }
-      }),
-      basketListLength: this.state.basketList.length,
-      basketListSum: this.state.basketList.reduce((sum, item) => sum + (item.count*item.price), 0)
+      basketList: (item.count > 1) ? this.state.basketList.map(i =>i.code === code ? { ...i, count: i.count - 1 } : i) : this.state.basketList.filter((i) => i.code !== code),
+      basketListSum: this.state.basketListSum - item.price
     });
+    //console.log(this.state.basketList)
   }
 
 }
