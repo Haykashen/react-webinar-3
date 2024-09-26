@@ -1,6 +1,6 @@
 .Item {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   transition: background-color 1s;
   padding-left: 10px;
 }
@@ -15,8 +15,28 @@
 }
 
 .Item-title {
+  margin: 20px 10px;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.Item-title::after {
+  content: '';
+  display: block;
   width: 100%;
-  padding: 20px 10px;
+  height: 2px;
+  background: #000;
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.Item-title:hover::after {
+  transform: scaleX(1);
 }
 
 .Item-actions {

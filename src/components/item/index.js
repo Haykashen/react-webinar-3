@@ -1,20 +1,28 @@
-import { memo, useState } from 'react';
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 import { cn as bem } from '@bem-react/classname';
 import { numberFormat } from '../../utils';
+import { useNavigate } from 'react-router-dom';
 import './style.css';
 
 function Item(props) {
   const cn = bem('Item');
+  const navigate = useNavigate();
 
   const callbacks = {
-    onAdd: e => props.onAdd(props.item._id),
+    onAdd: e => {
+      e.stopPropagation();
+      props.onAdd(props.item._id)
+    },
+    onNavigate: e => {
+      e.stopPropagation();
+      navigate(`/item/${props.item._id}`);
+    },  
   };
 
   return (
     <div className={cn()}>
-      {/*<div className={cn('code')}>{props.item._id}</div>*/}
-      <div className={cn('title')}>{props.item.title}</div>
+      <div className={cn('title')} onClick={callbacks.onNavigate}>{props.item.title}</div>
       <div className={cn('actions')}>
         <div className={cn('price')}>{numberFormat(props.item.price)} ₽</div>
         <button onClick={callbacks.onAdd}>Добавить</button>

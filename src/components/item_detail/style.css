@@ -1,0 +1,59 @@
+.categories {
+    padding: 0 0 20px 0;
+}
+  
+.categories-text {
+    font-weight: 700;
+}
+  
+.years {
+    padding: 0 0 20px 0;
+}
+
+.years-text {
+    font-weight: 700;
+}
+  
+.price {
+    padding: 0 0 20px;
+    font-weight: 700;
+    font-size: 24px;
+}
+
+.item-detail {
+    background-color: white;
+    height: 100vh;
+}
+  
+.under-title {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 20px;
+}
+  
+.head-item-detail {
+    height: 80px;
+    background: #f5f5f5;
+}
+  
+.head-item-detail h1 {
+    margin: 0;
+    padding: 20px 20px 10px;
+}
+  
+.Body {
+    margin: 40px 40px;
+}
+
+.description {
+    padding: 0 0 20px 0;
+}
+  
+.country {
+    padding: 0 0 20px 0;
+}
+  
+.country-text {
+    font-weight: 700;
+}
+  

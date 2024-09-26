@@ -30,7 +30,13 @@ class Basket extends StoreModule {
     if (!exist) {
       // Поиск товара в каталоге, чтобы его добавить в корзину.
       // @todo В реальном приложении будет запрос к АПИ вместо поиска по состоянию.
+      console.log(_id, this.store.getState().catalog.list)
       const item = this.store.getState().catalog.list.find(item => item._id === _id);
+
+      if (!item) {
+        console.error('Товар не найден в каталоге'); 
+        return;
+      }
       list.push({ ...item, amount: 1 }); // list уже новый, в него можно пушить.
       // Добавляем к сумме.
       sum += item.price;
@@ -68,6 +74,17 @@ class Basket extends StoreModule {
       },
       'Удаление из корзины',
     );
+
+    // deleteItem(code) {
+    //   const item = this.state.basketList.find(i => i.code === code);
+    //   //console.log(item.count)
+    //   this.setState({
+    //     ...this.state,
+    //     basketList: (item.count > 1) ? this.state.basketList.map(i =>i.code === code ? { ...i, count: i.count - 1 } : i) : this.state.basketList.filter((i) => i.code !== code),
+    //     basketListSum: this.state.basketListSum - item.price
+    //   });
+    //   //console.log(this.state.basketList)
+    // }
   }
 }
 

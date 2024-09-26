@@ -1,4 +1,5 @@
 import StoreModule from '../module';
+import { Navigate } from 'react-router-dom';
 
 class Modals extends StoreModule {
   initState() {
@@ -8,11 +9,12 @@ class Modals extends StoreModule {
   }
 
   open(name) {
-    this.setState({ name }, `Открытие модалки ${name}`);
+    this.setState({ name }, `Открытие модалки ${name}`, '/basket');
+    return <Navigate to={'basket'}/>
   }
 
   close() {
-    this.setState({ name: null }, `Закрытие модалки`);
+    this.setState({ name: null }, `Закрытие модалки`, '/');
   }
 }
 
