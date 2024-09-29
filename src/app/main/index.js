@@ -2,12 +2,13 @@ import { memo, useCallback, useEffect, useState } from 'react';
 import Item from '../../components/item';
 import PageLayout from '../../components/page-layout';
 import Head from '../../components/head';
-import BasketTool from '../../components/basket-tool';
 import List from '../../components/list';
+import PaginationContainer from '../../components/pagination-container';
+import NavigatorMain from '../../components/navigator-main';
 import useStore from '../../store/use-store';
 import useSelector from '../../store/use-selector';
-import './style.css';
-import {Link} from "react-router-dom";
+import { renderPaginationArray } from '../../utils';
+
 
 function Main() {
   const store = useStore();
@@ -33,9 +34,7 @@ function Main() {
     // Добавление в корзину
     addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),
     // Открытие модалки корзины
-    openModalBasket: useCallback(() => store.actions.modals.open('basket') , [store]),
-    // Меняем страницу
-    changePage: useCallback(newPage => setPage(newPage), []),
+    openModalBasket: useCallback(() => store.actions.modals.open('basket') , [store]),  
   };
 
   const renders = {
@@ -47,53 +46,12 @@ function Main() {
     ),
   };
 
-  const renderPagination = () => {
-    const pages = [];
-    if (totalPages <= 5) {
-      // Если страниц 5 или меньше, показываем их все
-      for (let i = 1; i <= totalPages; i++) {
-        pages.push(i);
-      }
-    } else {
-      if (page <= 2) {
-        // Когда текущая страница <= 2
-        pages.push(1, 2, 3, '...', totalPages);
-      } else if (page >= totalPages - 2) {
-        // Когда текущая страница близка к последней
-        pages.push(1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
-      } else if (page === 3) {
-        pages.push(1, 2, 3, 4, '...', totalPages);
-      } else {
-        // Для всех остальных случаев
-        pages.push(1, '...', page - 1, page, page + 1, '...', totalPages);
-      }
-    }
-    return pages;
-  };
-
   return (
     <PageLayout>
       <Head title="Магазин" />
-      <div className="under-title">
-        <Link to="/">Главная</Link>
-        <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum} />
-      </div>
+      <NavigatorMain onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum}/>
       <List list={select.list} renderItem={renders.item} />
-      <div className="pagination-container">
-        <div className="pagination">
-          {renderPagination().map((pageNumber, index) =>
-            pageNumber === '...' ? (
-              <span key={index} className="pagination-ellipsis">
-                ...
-              </span>
-            ) : (
-              <button key={index} className={pageNumber === page ? 'active' : ''} onClick={() => callbacks.changePage(pageNumber)} disabled={pageNumber === page}>
-                {pageNumber}
-              </button>
-            ),
-          )}
-        </div>
-      </div>      
+      <PaginationContainer pagination = {renderPaginationArray(page, totalPages)} setPage = {setPage} page ={page}/> 
     </PageLayout>
   );
 }

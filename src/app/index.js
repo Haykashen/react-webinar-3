@@ -3,7 +3,7 @@ import Main from './main';
 import Basket from './basket';
 import useSelector from '../store/use-selector';
 import { Route, Routes } from 'react-router-dom';
-import ItemDetail from "../components/item_detail";
+import ItemDetail from "./item_detail";
 
 /**
  * Приложение

@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState, memo } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import useStore from '../../store/use-store';
-import './style.css';
-import BasketTool from '../basket-tool';
+import NavigatorMain from '../../components/navigator-main';
+import Head from '../../components/head';
+import PageLayout from '../../components/page-layout';
 import useSelector from "../../store/use-selector";
 
 function ItemDetail() {
@@ -51,16 +52,11 @@ function ItemDetail() {
   if (!item) {
     return <div>Загрузка...</div>;
   }
-
-  return (
-    <div className="item-detail">
-      <div className="head-item-detail">
-        <h1>{item.title}</h1>
-      </div>
-      <div className="under-title">
-        <Link to="/">Главная</Link>
-        <BasketTool onOpen={openModalBasket} amount={select.amount || 0} sum={select.sum || 0} />
-      </div>
+//<div className="item-detail"> </div>
+  return (   
+    <PageLayout>
+      <Head title={item.title}/>
+      <NavigatorMain onOpen={openModalBasket} amount={select.amount} sum={select.sum}/>
       <div className="Body">
         <div className="description">Описание: {item.description}</div>
         <div className="country">Страна производителя: <span className="country-text">{item.country ? item.country : 'Не указано'}</span></div>
@@ -68,8 +64,8 @@ function ItemDetail() {
         <div className="years">Год выпуска: <span className="years-text">{item.releaseYear ? item.releaseYear : 'Не указано'}</span></div>
         <div className="price">Цена: {item.price} ₽</div>
         <button onClick={addToBasket}>Добавить</button>
-      </div>
-    </div>
+      </div>      
+    </PageLayout> 
   );
 }
 

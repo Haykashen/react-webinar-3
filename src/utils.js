@@ -33,3 +33,20 @@ export function codeGenerator(start = 0) {
 export function numberFormat(value, locale = 'ru-RU', options = {}) {
   return new Intl.NumberFormat(locale, options).format(value);
 }
+
+/**
+ * Возвращает массив с нумерацией страниц
+ * @param page {Number}
+ * @param totalPages {Number}
+ * @returns {Array}
+ */
+export function renderPaginationArray(page, totalPages) {
+
+    let pages = [...new Set([1, (page - 2 > 1)? '...': 1, (page - 1> 0) ? page-1 : 1, page, (page + 1 < totalPages) ? page + 1: totalPages,(page + 2 < totalPages)? '..': totalPages , totalPages])];
+    if(pages.indexOf('..') >= 0); // true
+      pages[pages.indexOf('..')] = '...';
+
+    return pages;
+}
+
+

@@ -13,3 +13,46 @@ body {
   box-sizing: border-box;
   box-shadow: 0 0 15px 5px #0000003b;
 }
+
+.categories {
+  padding: 0 0 20px 0;
+}
+
+.categories-text {
+  font-weight: 700;
+}
+
+.years {
+  padding: 0 0 20px 0;
+}
+
+.years-text {
+  font-weight: 700;
+}
+
+.price {
+  padding: 0 0 20px;
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.item-detail {
+  background-color: white;
+  height: 100vh;
+}
+
+.Body {
+  margin: 40px 40px;
+}
+
+.description {
+  padding: 0 0 20px 0;
+}
+
+.country {
+  padding: 0 0 20px 0;
+}
+
+.country-text {
+  font-weight: 700;
+}
