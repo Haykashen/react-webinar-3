@@ -12,19 +12,13 @@ function ItemDetail() {
   const [item, setItem] = useState(null);
 
   useEffect(() => {
-    const fetchItem = async () => {
-      try {
-        const response = await fetch(`/api/v1/articles/${id}`);
-        if (!response.ok) {
-          throw new Error('Сеть не отвечает');
-        }
-        const data = await response.json();
-        setItem(data.result);
-      } catch (error) {
-        console.error('Ошибка при загрузке товара:', error);
+      async function fetchData() {
+        await fetch(`/api/v1/articles/${id}`)
+        .then(response => response.json())
+        .then(data => setItem(data.result)); 
       }
-    };
-    fetchItem();
+      fetchData();
+
   }, [id]);
 
   const select = useSelector(state => ({
@@ -33,12 +27,10 @@ function ItemDetail() {
     sum: state.basket.sum,
   }));
 
-  const basket = store.basket || {};
-
-  const addToBasket = useCallback(() =>{
- //     console.log(, id)
+  const addToBasket = useCallback((argItem) =>{
+    console.log('argItem', argItem)
       if (store.actions.basket) 
-        store.actions.basket.addToBasket(id);
+        store.actions.basket.addToBasket(argItem);
     },
     [store.actions.basket],
   );
@@ -60,10 +52,10 @@ function ItemDetail() {
       <div className="Body">
         <div className="description">Описание: {item.description}</div>
         <div className="country">Страна производителя: <span className="country-text">{item.country ? item.country : 'Не указано'}</span></div>
-        <div className="categories">Категория: <span className="categories-text">{item.categories ? item.categories : 'Не указано'}</span></div>
-        <div className="years">Год выпуска: <span className="years-text">{item.releaseYear ? item.releaseYear : 'Не указано'}</span></div>
+        <div className="categories">Категория: <span className="categories-text">{item.category._id ? item.category._id : 'Не указано'}</span></div>
+        <div className="years">Год выпуска: <span className="years-text">{item.edition ? item.edition : 'Не указано'}</span></div>
         <div className="price">Цена: {item.price} ₽</div>
-        <button onClick={addToBasket}>Добавить</button>
+        <button onClick={()=>addToBasket(item)}>Добавить</button>
       </div>      
     </PageLayout> 
   );

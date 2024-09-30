@@ -6,13 +6,14 @@ import { useNavigate } from 'react-router-dom';
 import './style.css';
 
 function Item(props) {
+  console.log('item-props', props)
   const cn = bem('Item');
   const navigate = useNavigate();
 
   const callbacks = {
     onAdd: e => {
       e.stopPropagation();
-      props.onAdd(props.item._id)
+      props.onAdd(props.item)
     },
     onNavigate: e => {
       e.stopPropagation();
