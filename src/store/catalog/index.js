@@ -7,6 +7,7 @@ class Catalog extends StoreModule {
 //    this.generateCode = codeGenerator(0);
     this.activePage = 1; // текущая страница
     this.countPages = 1; // всего страниц
+    this.limitPages = 10;
   }
 
   initState() {
@@ -20,7 +21,9 @@ class Catalog extends StoreModule {
    * @param page {Number}
    */
   setActivePage(page = 1){
+    console.log('new active page =', page)
     this.activePage = page;
+    this.load({ limit: this.limitPages, skip: (page - 1) * this.limitPages })
   }
 
   /**
@@ -33,6 +36,10 @@ class Catalog extends StoreModule {
 
   getActivePage(){
     return this.activePage;
+  }
+
+  getLimitPages(){
+    return this.limitPages;
   }
 
   getCountPages(){
@@ -50,6 +57,7 @@ class Catalog extends StoreModule {
       },
       'Загружены товары из АПИ',
     );
+    this.setCountPages(Math.ceil(json.result.count/ limit));
 
     return { count: json.result.count };
   }

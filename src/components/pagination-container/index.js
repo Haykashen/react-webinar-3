@@ -2,10 +2,10 @@ import { memo, useCallback } from 'react';
 import './style.css';
 
 function PaginationContainer({ pagination, setPage, page }) {
-    const callbacks = {
-        // Меняем страницу
-        changePage: useCallback(newPage => setPage(newPage), []),
-      };
+    //  const callbacks = {
+    //      // Меняем страницу
+    //      changePage: useCallback(newPage => setPage(newPage), []),
+    //    };
 
 
 return (
@@ -17,7 +17,7 @@ return (
                 ...
               </span>
             ) : (
-              <button key={index} className={pageNumber === page ? 'active' : ''} onClick={() => callbacks.changePage(pageNumber)} disabled={pageNumber === page}>
+              <button key={index} className={pageNumber === page ? 'active' : ''} onClick={() => setPage(pageNumber)} disabled={pageNumber === page}>
                 {pageNumber}
               </button>
             ),

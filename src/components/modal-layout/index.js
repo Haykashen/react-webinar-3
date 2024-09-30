@@ -8,7 +8,7 @@ function ModalLayout(props) {
 
   // Корректировка центра, если модалка больше окна браузера.
   const layout = useRef();
-  const frame = useRef();
+  const frame  = useRef();
   useEffect(() => {
     const resizeObserver = new ResizeObserver(() => {
       // Центрирование frame или его прижатие к краю, если размеры больше чем у layout

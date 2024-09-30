@@ -14,9 +14,9 @@ class Basket extends StoreModule {
    * @param _id Код товара
    */
   addToBasket(_id) {
+  console.log(this.getState().list, this.store.getState().catalog.list)
     let sum = 0;
-    // Ищем товар в корзине, чтобы увеличить его количество
-    let exist = false;
+    let exist = false;// Ищем товар в корзине, чтобы увеличить его количество
     const list = this.getState().list.map(item => {
       let result = item;
       if (item._id === _id) {
@@ -31,6 +31,7 @@ class Basket extends StoreModule {
       // Поиск товара в каталоге, чтобы его добавить в корзину.
       // @todo В реальном приложении будет запрос к АПИ вместо поиска по состоянию.
       console.log(_id, this.store.getState().catalog.list)
+
       const item = this.store.getState().catalog.list.find(item => item._id === _id);
 
       if (!item) {

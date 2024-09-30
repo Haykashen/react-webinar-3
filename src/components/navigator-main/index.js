@@ -13,4 +13,4 @@ function NavigatorMain ({ onOpen, amount, sum }){
     )
 }
 
-export default memo(NavigatorMain);;
+export default memo(NavigatorMain);
