@@ -1,0 +1,16 @@
+.AuthForm {
+  padding: 20px;
+}
+
+.AuthForm-title {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.AuthForm-row {
+  margin: 20px 0;
+}
+
+.AuthForm-row_errors {
+  color: #ff0000;
+}
