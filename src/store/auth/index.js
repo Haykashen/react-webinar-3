@@ -37,11 +37,11 @@ class AuthState extends StoreModule {
       const json = await response.json();
 
       if (json.error) throw new Error(json.error.data?.issues?.[0]?.message || 'Ошибка при входе!');
-
+      console.log('auth ',json) 
       const {
         token,
         user: { username },
-      } = json.result;
+      } = json.result;//username
 
       if (token) {
         localStorage.setItem('token', token);
@@ -51,7 +51,7 @@ class AuthState extends StoreModule {
             passwordValue: '',
             user: username,
             authError: null,
-            isAuthenticating: false,
+            isAuthenticating: true,
           },
           'Пользователь успешно вошел в систему',
         );
@@ -69,7 +69,7 @@ class AuthState extends StoreModule {
   async signOut() {
     this.setState({
       ...this.getState(),
-      isAuthenticating: true,
+      isAuthenticating: false,
     });
 
     try {
@@ -120,6 +120,13 @@ class AuthState extends StoreModule {
       user: username,
     });
   }
+
+  setAuthError(error) {
+    this.setState({
+      ...this.getState(),
+      authError: error,
+    });
+  }  
 }
 
 export default AuthState;

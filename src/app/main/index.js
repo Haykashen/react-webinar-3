@@ -29,7 +29,10 @@ function Main() {
 
   return (
     <PageLayout>
-      <AuthBlock />
+      <AuthBlock 
+        logout = {t('logout')}
+        login  = {t('login')}
+      />
       <Head title={t('title')}>
         <LocaleSelect />
       </Head>

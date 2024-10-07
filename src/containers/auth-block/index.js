@@ -5,20 +5,25 @@ import useStore from '../../hooks/use-store';
 import useTranslate from '../../hooks/use-translate';
 import useSelector from '../../hooks/use-selector';
 
-function AuthBlock() {
+function AuthBlock({logout, login}) {
   const store = useStore();
   const navigate = useNavigate();
-  const { t } = useTranslate();
+ // const { t } = useTranslate();
 
   const callbacks = {
     logOutHandler: useCallback(async () => {
       await store.actions.auth.signOut();
       navigate('/auth');
     }, [store]),
+    logInHandler: useCallback(() =>{
+      console.log('login button')
+      store.actions.auth.setAuthError('');
+      navigate('/auth')
+    },[])
   };
 
   const select = useSelector(state => ({
-    username: state.auth.user,
+    username: state.user.userInfo.fullName,
   }));
 
   return (
@@ -27,10 +32,10 @@ function AuthBlock() {
         <SideLayout side="between">
           <Link to="/profile">{select.username}</Link>
           {'  '}
-          <button onClick={callbacks.logOutHandler}>{t('logout')}</button>
+          <button onClick={callbacks.logOutHandler}>{logout}</button>
         </SideLayout>
       ) : (
-        <button onClick={() => navigate('/auth')}>{t('login')}</button>
+        <button onClick={() => callbacks.logInHandler()}>{login}</button>
       )}
     </SideLayout>
   );

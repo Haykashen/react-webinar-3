@@ -12,12 +12,22 @@ function Auth() {
 
   return (
     <PageLayout>
-      <AuthBlock />
+      <AuthBlock         
+        logout = {t('logout')}
+        login  = {t('login')}
+      />
       <Head title={t('title')}>
         <LocaleSelect />
       </Head>
       <Navigation />
-      <AuthForm />
+      <AuthForm 
+        title={t('login.title')} 
+        placeholderLogin={t('login.username.placeholder')}
+        labelLogin={t('login.username')}
+        placeholderPass={t('login.password.placeholder')}
+        labelPass={t('login.password')}
+        getIn ={t('getIn')}       
+      />
     </PageLayout>
   );
 }

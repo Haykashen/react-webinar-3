@@ -9,10 +9,10 @@ import './style.css';
 import useTranslate from '../../hooks/use-translate';
 import {useNavigate} from 'react-router-dom';
 
-function AuthForm() {
+function AuthForm({title, placeholderLogin, labelLogin, placeholderPass, labelPass, getIn }) {
   const cn = bem('AuthForm');
 
-  const { t } = useTranslate();
+  //const { t } = useTranslate();
   const navigate = useNavigate();
   const store = useStore();
 
@@ -31,39 +31,41 @@ function AuthForm() {
 
   return (
     <div className={cn()}>
-      <div className={cn('title')}>{t('login.title')}</div>
+      <div className={cn('title')}>{title}</div>
       <form
         onSubmit={e => {
           e.preventDefault();
           callbacks.onSubmitForm();
           console.log(store.actions.auth.getState().isAuthenticating)
-          // if(store.actions.auth.getState().isAuthenticating)
-          //   () => navigate('/profile')
+          if(store.actions.auth.getState().isAuthenticating)
+            navigate("/profile")
         }}
       >
         <Spinner active={select.waiting}>
           <div className={cn('row')}>
+            <div>Логин</div>
             <Input
               id="username"
               value={select.login}
               onChange={callbacks.onChangeLogin}
-              placeholder={t('login.username.placeholder')}
-              label={t('login.username')}
+              placeholder={placeholderLogin}
+              label={labelLogin}
             />
           </div>
           <div className={cn('row')}>
+          <div>Пароль</div>
             <Input
               id="password"
               type="password"
               value={select.password}
               onChange={callbacks.onChangePassword}
-              placeholder={t('login.password.placeholder')}
-              label={t('login.password')}
+              placeholder={placeholderPass}
+              label={labelPass}
             />
           </div>
           <div className={cn('row', { errors: true })}>{select.error}</div>
           <div className={cn('row')}>
-            <button type="submit">{t('getIn')}</button>
+            <button type="submit">{getIn}</button>
           </div>
         </Spinner>
       </form>

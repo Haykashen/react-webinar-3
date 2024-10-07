@@ -4,21 +4,21 @@ import { cn as bem } from '@bem-react/classname';
 import './style.css';
 import useTranslate from '../../hooks/use-translate';
 
-function ProfileCard({ profile }) {
+function ProfileCard({ profile, title, name, phone, email}) {
   const cn = bem('ProfileInfo');
-  const { t } = useTranslate();
+  //const { t } = useTranslate();
 
   return (
     <div className={cn()}>
-      <div className={cn('title')}>{t('profile.title')}</div>
+      <div className={cn('title')}>{title}</div>
       <div className={cn('row')}>
-        {t('profile.name')}: <strong>{profile?.fullName || '-'}</strong>
+        {name}: <strong>{profile?.fullName || '-'}</strong>
       </div>
       <div className={cn('row')}>
-        {t('profile.phone')}: <strong>{profile?.contactPhone || '-'}</strong>
+        {phone}: <strong>{profile?.contactPhone || '-'}</strong>
       </div>
       <div className={cn('row')}>
-        {t('profile.email')}: <strong>{profile?.contactEmail || '-'}</strong>
+        {email}: <strong>{profile?.contactEmail || '-'}</strong>
       </div>
     </div>
   );
