@@ -1,0 +1,15 @@
+.CommentList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.CommentList_child {
+  list-style: none;
+  padding-left: 30px;
+}
+
+.CommentsSection {
+  padding: 0 40px 40px 40px;
+  margin-top: 30px;
+}
