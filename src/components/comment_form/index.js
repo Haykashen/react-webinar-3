@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { cn as bem } from '@bem-react/classname';
 import './style.css';
 
-function CommentForm({ onAdd, onCancel, title, cancelButtonText, t}) {
+function CommentForm({author, parentId, onAdd, onCancel, title, cancelButtonText, t}) {
   const cn = bem('CommentForm');
   const ref  = useRef(null)
 
@@ -18,7 +18,12 @@ function CommentForm({ onAdd, onCancel, title, cancelButtonText, t}) {
       ref.current.value = '';
       onCancel()
     }
-    onAdd(value, onSuccess);
+    // {
+    //   "text": "Первый ответ на коммент!",
+    //   "parent": {"_id":  "670429839c74519426f378bd", "_type":  "comment"}
+    // }
+    onAdd({"text": value, "parent": {parentId, "_type": 'comment'}},author , onSuccess)
+
   }
 
   return (

@@ -10,8 +10,9 @@ import './style.css';
 function Comment({comment, openCommentId, onCancel, onAdd, onOpen, isAuth, t = text => text }) {
   const { author, text, dateCreate, isDeleted, children, _id } = comment;
   const cn = bem('Comment');
-  const onAddAnswer = (text, onSuccess) => onAdd({parent: {_id, _type: 'comment'}, text}, onSuccess)
-
+  //const onAddAnswer = (text, onSuccess) => onAdd({parent: {_id, _type: 'comment'}, text}, onSuccess)
+  console.log('author.profile.name=',author.profile.name )
+  console.log('_id, openCommentId =',_id, openCommentId)
   return (
     <div className={cn()}>
       <div className={cn('user-date')}>
@@ -24,7 +25,9 @@ function Comment({comment, openCommentId, onCancel, onAdd, onOpen, isAuth, t = t
       </button>
       {isAuth && openCommentId === _id && (
         <CommentForm
-          onAdd={onAddAnswer}
+          author={author.profile.name}
+          parentId ={_id}
+          onAdd={onAdd}
           onCancel={onCancel}
           title={t('comments.new-answer')}
           cancelButtonText={t('comments.cancel')}

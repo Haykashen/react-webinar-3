@@ -24,6 +24,8 @@ export default {
      * @return {Function}
      */
     add: (data, userName, onSuccess) => {
+      console.log("post data=",data)
+      console.log("userName=",userName)
       return async (dispatch, _, services) => {
         try {
           const res = await services.api.request({
@@ -31,9 +33,11 @@ export default {
             url: `/api/v1/comments`,
             body: JSON.stringify(data),
           });
-          const payload = {...res.data.result, author: { profile: { name: userName } } };
+          console.log("post comment res=",res)
+          const payload = {...res.data.result, author: { profile: { name: userName.name } } };
           dispatch({ type: 'comments/add-success', payload });
-          if (onSuccess) onSuccess();
+          if (onSuccess) 
+            ()=>onSuccess();
         } catch (e) {
           console.error({e})
           dispatch({ type: 'comments/add-error' });
