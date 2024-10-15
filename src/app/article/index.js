@@ -29,17 +29,21 @@ function Article() {
     dispatch(articleActions.load(params.id));
     dispatch(commentsActions.load(params.id));
   }, [params.id]);
-
+  useInit(async () => {
+    await store.actions.session.remind();
+  });
   const select = useSelector(
     state => ({
       article: state.article.data,
       waiting: state.article.waiting,
       comments: state.comments.data,
-      waitingComments: state.comments.waiting
+      waitingComments: state.comments.waiting,
+      replyTo: state.comments.replyTo,
+      exists: state,
     }),
     shallowequal,
   ); // Нужно указать функцию для сравнения свойства объекта, так как хуком вернули объект
-
+  console.log('exists',select.exists)
   const { t } = useTranslate();
  
   const callbacks = {
@@ -68,7 +72,19 @@ function Article() {
       </Spinner>
       <h3 style={{ margin: '30px 0 25px 30px'}}>Комментарии ({select.comments.count})</h3>
       <div>{select.comments.items && select.comments.items.map(comment => (<CommentContainer key={comment._id} comment={comment} onReply={handleReply} level={0}/>))} </div> 
-      
+
+      {!select.replyTo && !select.exists && (
+        <p style={{ marginLeft: '30px' }}>
+          <Link
+            to="/login"
+            className="comment-warn"
+            state={{ back: location.pathname + location.search }}
+          >
+            Войдите
+          </Link>
+          , чтобы иметь возможность комментировать
+        </p>
+      )}      
     </PageLayout>
   );
 }

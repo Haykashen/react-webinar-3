@@ -1,5 +1,7 @@
 import listToTree from '../../utils/list-to-tree';
 import treeToList from '../../utils/tree-to-list';
+import axios from 'axios';
+
 export default {
   /**
    * Загрузка товара
