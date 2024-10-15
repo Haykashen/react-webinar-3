@@ -1,17 +1,14 @@
 import StoreModule from '../module';
-
 /**
  * Детальная ифнормация о товаре для страницы товара
  */
 class ArticleState extends StoreModule {
   initState() {
     return {
-      data: {},
-      comments: {},
+      data: [],
       waiting: false, // признак ожидания загрузки
     };
   }
-
   /**
    * Загрузка товаров по id
    * @param id {String}
@@ -20,8 +17,7 @@ class ArticleState extends StoreModule {
   async load(id) {
     // Сброс текущего товара и установка признака ожидания загрузки
     this.setState({
-      data: {},
-      comments: {},
+      data: [],
       waiting: true,
     });
 
@@ -29,30 +25,22 @@ class ArticleState extends StoreModule {
       const res = await this.services.api.request({
         url: `/api/v1/articles/${id}?fields=*,madeIn(title,code),category(title)`,
       });
-
-      const comments = await this.services.api.request({
-        url: `/api/v1/comments?fields=items(_id,text,dateCreate,author(profile(name)),parent(_id,_type),isDeleted),count&limit=*&search[parent]=${id}`,
-      });      
-     
       // Товар загружен успешно
       this.setState(
         {
           data: res.data.result,
-          comments: comments.result,
           waiting: false,
         },
-        'Загружен товар и его комментарии из АПИ',
+        'Загружен товар из АПИ',
       );
     } catch (e) {
       // Ошибка при загрузке
       // @todo В стейт можно положить информацию об ошибке
       this.setState({
-        data: {},
-        comments: {},
+        data: [],
         waiting: false,
       });
     }
   }
 }
-
 export default ArticleState;

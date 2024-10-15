@@ -18,27 +18,22 @@ function Login() {
   const location = useLocation();
   const navigate = useNavigate();
   const store = useStore();
-
   useInit(() => {
     store.actions.session.resetErrors();
   });
-
   const select = useSelector(state => ({
     waiting: state.session.waiting,
     errors: state.session.errors,
   }));
-
   const [data, setData] = useState({
     login: '',
     password: '',
   });
-
   const callbacks = {
     // Колбэк на ввод в элементах формы
     onChange: useCallback((value, name) => {
       setData(prevData => ({ ...prevData, [name]: value }));
     }, []),
-
     // Отправка данных формы для авторизации
     onSubmit: useCallback(
       e => {
@@ -52,7 +47,9 @@ function Login() {
           navigate(back);
         });
       },
-      [data, location.state],
+
+      [data, location.state, navigate, store.actions.session]
+      // [data, location.state],
     ),
   };
 
@@ -86,5 +83,4 @@ function Login() {
     </PageLayout>
   );
 }
-
 export default memo(Login);

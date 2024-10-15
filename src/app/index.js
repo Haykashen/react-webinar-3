@@ -1,6 +1,5 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+
 import { Routes, Route } from 'react-router-dom';
-import useSelector from '../hooks/use-selector';
 import useStore from '../hooks/use-store';
 import useInit from '../hooks/use-init';
 import Main from './main';
@@ -10,7 +9,6 @@ import Login from './login';
 import Profile from './profile';
 import Protected from '../containers/protected';
 import { useSelector as useSelectorRedux } from 'react-redux';
-
 /**
  * Приложение
  * @returns {React.ReactElement}
@@ -20,9 +18,7 @@ function App() {
   useInit(async () => {
     await store.actions.session.remind();
   });
-
   const activeModal = useSelectorRedux(state => state.modals.name);
-
   return (
     <>
       <Routes>
@@ -38,10 +34,8 @@ function App() {
           }
         />
       </Routes>
-
       {activeModal === 'basket' && <Basket />}
     </>
   );
 }
-
 export default App;
