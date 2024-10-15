@@ -3,7 +3,7 @@ import StoreModule from '../module';
 /**
  * Детальная ифнормация о товаре для страницы товара
  */
-class ArticleState extends StoreModule {
+class CommentsState extends StoreModule {
   initState() {
     return {
       data: {},
@@ -25,7 +25,7 @@ class ArticleState extends StoreModule {
 
     try {
       const res = await this.services.api.request({
-        url: `/api/v1/articles/${id}?fields=*,madeIn(title,code),category(title)`,
+        url: `/api/v1/comments?fields=items(_id,text,dateCreate,author(profile(name)),parent(_id,_type),isDeleted),count&limit=*&search[parent]=${id}`,
       });
 
       // Товар загружен успешно
@@ -34,7 +34,7 @@ class ArticleState extends StoreModule {
           data: res.data.result,
           waiting: false,
         },
-        'Загружен товар из АПИ',
+        'Загружены комментарии из АПИ',
       );
     } catch (e) {
       // Ошибка при загрузке
@@ -47,4 +47,4 @@ class ArticleState extends StoreModule {
   }
 }
 
-export default ArticleState;
+export default CommentsState;

@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import useSelector from '../../hooks/use-selector';
 import { useSelector as useReduxSelector } from 'react-redux';
-import reviewsActions from '../../store-redux/reviews/actions';
+import commentsActions from '../../store-redux/comments/actions';
 import CommentView from '../../components/comment-view';
 
 const CommentContainer = ({ comment, onReply, level = 0 }) => {
@@ -14,11 +14,11 @@ const CommentContainer = ({ comment, onReply, level = 0 }) => {
     userId: state.session.user?.['_id'] || null,
   }));
 
-  const replyTo = useReduxSelector(state => state.reviews.replyTo);
+  const replyTo = useReduxSelector(state => state.comments.replyTo);
   const isReplying = replyTo === comment._id;
   const isCurrentUser = comment.author?.['_id'] === select.userId;
   const handleCancel = () => {
-    dispatch(reviewsActions.clearReplyTo());
+    dispatch(commentsActions.clearReplyTo());
   };
 
   const renderReply = (reply, newLevel) => (

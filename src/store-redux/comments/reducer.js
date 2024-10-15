@@ -1,28 +1,44 @@
+// Начальное состояние
 export const initialState = {
-    items: [],
-    count: 0,
-    waiting: false,
-    error: ''
-  };
+  data: {},
+  waiting: false, // признак ожидания загрузки
+};
+
+// Обработчик действий
+function reducer(state = initialState, action) {
+  switch (action.type) {
+    case 'comments/load-start':
+      return { ...state, data: {}, waiting: true };
+
+    case 'comments/load-success':
+      return { ...state, data: action.payload.data, waiting: false };
+
+    case 'comments/load-error':
+      return { ...state, data: {}, waiting: false }; //@todo текст ошибки сохранять?
+
+    case 'comments/set-reply-to':
+        return { ...state, replyTo: action.payload };
   
-  function reducer(state = initialState, action) {
-    switch (action.type) {
-      case 'comments/load-start': return { ...state, items: [], waiting: true };
-      case 'comments/load-success': {
-        const { items, count } = action.payload;
-        return { ...state, items, count, waiting: false, error: '' };
-      }
-      case 'comments/load-error':
-        return { ...state, items: [], waiting: false, error: 'Ошибка загрузки комментариев' };
-      case 'comments/add-success': {
-        const count = state.count + 1;
-        const items = [...state.items, action.payload];
-        return { ...state, items, count, waiting: false, error: '' };
-      }
+    case 'comments/clear-reply-to':
+        return { ...state, replyTo: null };
+  
+    case 'comments/add-start':
+        return { ...state};
+  
+    case 'comments/add-success':
+        return produce(state, draft => {
+          draft.data.push(action.payload);
+          draft.data.sort(
+            (a, b) => new Date(a.dateCreate) - new Date(b.dateCreate)
+          );
+        });
+  
       case 'comments/add-error':
-        return { ...state, waiting: false, error: 'Ошибка добавления комментария' };
-      default: return state;
-    }
+        return { ...state};
+    default:
+      // Нет изменений
+      return state;
   }
-  
-  export default reducer;
+}
+
+export default reducer;

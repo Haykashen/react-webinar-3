@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import reviewsActions from '../../store-redux/reviews/actions';
+import commentsActions from '../../store-redux/comments/actions';
 import CommentsFormView from '../../components/comments-form-view';
 import useSelector from '../../hooks/use-selector';
 
@@ -21,13 +21,13 @@ const CommentsForm = ({ parentId }) => {
     e.preventDefault();
     console.log('Форма отправлена');
     const targetType = targetId === articleId ? 'article' : 'comment';
-    dispatch(reviewsActions.addNewComment(targetId, text, targetType, select.name, select._id));
+    dispatch(commentsActions.addNewComment(targetId, text, targetType, select.name, select._id));
     setText('');
-    dispatch(reviewsActions.clearReplyTo());
+    dispatch(commentsActions.clearReplyTo());
   };
 
   const handleCancel = () => {
-    dispatch(reviewsActions.clearReplyTo());
+    dispatch(commentsActions.clearReplyTo());
   };
 
   return (

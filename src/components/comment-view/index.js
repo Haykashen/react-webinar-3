@@ -30,7 +30,7 @@ const CommentView = ({
     : 'comment-author';
 
   return (
-    <div className="comment" style={{ marginLeft: `${indent}px` }}>
+    <div className="comment" style={{ marginLeft: `${indent}px`, marginRight: `${indent}px`}}>
       <div className="comment-item" style={{ marginBottom: '30px' }}>
         <strong className={authorClassName}>{comment.author?.profile?.name || 'Аноним'}</strong>{' '}
         <span className="comment-date">

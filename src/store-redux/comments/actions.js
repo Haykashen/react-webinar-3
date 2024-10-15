@@ -1,47 +1,92 @@
+import listToTree from '../../utils/list-to-tree';
+import treeToList from '../../utils/tree-to-list';
 export default {
-    /**
-     * Загрузка комментариев
-     * @param id
-     * @return {Function}
-     */
-    load: id => {
-      return async (dispatch, _, services) => {
-        dispatch({ type: 'comments/load-start' });
-        try {
-          const url = `/api/v1/comments?fields=items(_id,text,dateCreate,author(profile(name)),parent(_id,_type),isDeleted),count&limit=*&search[parent]=${id}`
-          const res = await services.api.request({ url });
-          const { count, items } = res.data.result;
-          dispatch({ type: 'comments/load-success', payload: { items, count } });
-        } catch (e) {
-          dispatch({ type: 'comments/load-error' });
+  /**
+   * Загрузка товара
+   * @param id
+   * @return {Function}
+   */
+  load: id => {
+    return async (dispatch, getState, services) => {
+      // Сброс текущего товара и установка признака ожидания загрузки
+      dispatch({ type: 'comments/load-start' });
+
+      try {
+        const res = await services.api.request({
+          url: `/api/v1/comments?fields=items(_id,text,dateCreate,author(profile(name)),parent(_id,_type),isDeleted),count&limit=*&search[parent]=${id}`,
+        });
+        let tree = listToTree(res.data.result.items)
+        console.log('tree= ',tree)
+        let newList = treeToList(tree)
+        console.log('newList= ',newList)
+        res.data.result.items = newList;
+        // Товар загружен успешно
+        dispatch({ type: 'comments/load-success', payload: { data: {...res.data.result} } });
+      } catch (e) {
+        //Ошибка загрузки
+        dispatch({ type: 'comments/load-error' });
+      }
+    };
+  },
+
+  addNewComment: (targetId, text, targetType, currentUser, id) => {
+    const token = localStorage.getItem('token');
+    return async dispatch => {
+      dispatch({ type: 'comments/add-start' });
+
+      try {
+        const res = await axios.post(
+          '/api/v1/comments',
+          {
+            text: text,
+            parent: { _id: targetId, _type: targetType },
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Token': token,
+            },
+          },
+        );
+        const newComment = res.data.result;
+        if (currentUser) {
+          newComment.author = {
+            _id: id,
+            profile: {
+              name: currentUser,
+            },
+          };
         }
-      };
-    },
-  
-      /**
-     * Добавление комментария
-     * @param data {{text: string, parent: { _id: string, _type: string } }}
-     * @return {Function}
-     */
-    add: (data, userName, onSuccess) => {
-      console.log("post data=",data)
-      console.log("userName=",userName)
-      return async (dispatch, _, services) => {
-        try {
-          const res = await services.api.request({
-            method: 'POST',
-            url: `/api/v1/comments`,
-            body: JSON.stringify(data),
-          });
-          console.log("post comment res=",res)
-          const payload = {...res.data.result, author: { profile: { name: userName.name } } };
-          dispatch({ type: 'comments/add-success', payload });
-          if (onSuccess) 
-            ()=>onSuccess();
-        } catch (e) {
-          console.error({e})
-          dispatch({ type: 'comments/add-error' });
+
+        if (!newComment.dateCreate) {
+          newComment.dateCreate = new Date().toISOString();
         }
-      };
-    },
-  };
+        dispatch({ type: 'comments/add-success', payload: newComment });
+      } catch (error) {
+        console.error('Ошибка при добавлении комментария:', error);
+        dispatch({ type: 'comments/add-error' });
+      }
+    };
+  },
+
+  /**
+   * Установка ID комментария, на который происходит ответ
+   * @param commentId - ID комментария для ответа
+   * @return {Function}
+   */
+  setReplyTo: commentId => {
+    return dispatch => {
+      dispatch({ type: 'comments/set-reply-to', payload: commentId });
+    };
+  },
+
+  /**
+   * Сброс состояния ответа на комментарий
+   * @return {Function}
+   */
+  clearReplyTo: () => {
+    return dispatch => {
+      dispatch({ type: 'comments/clear-reply-to' });
+    };
+  },  
+};
